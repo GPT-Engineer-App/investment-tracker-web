@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Projeto Financeiro - Cadastro</title>
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <h1>Projeto Financeiro</h1>
+      </div>
+      <div class="form-group">
+        <label for="nomeCompleto">Nome Completo:</label>
+        <input type="text" id="nomeCompleto" name="nomeCompleto" />
+      </div>
+      <div class="form-group">
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" />
+      </div>
+      <div class="form-group">
+        <label for="senha">Senha:</label>
+        <input type="password" id="senha" name="senha" />
+      </div>
+      <div class="form-group">
+        <label for="confirmSenha">Confirmar Senha:</label>
+        <input type="password" id="confirmSenha" name="confirmSenha" />
+      </div>
+      <button class="button" onclick="register()">Cadastrar</button>
+      <button class="button" onclick="window.location.href='index.html'">Voltar</button>
+    </div>
+
+    <script>
+      function register() {
+        const nomeCompleto = document.getElementById("nomeCompleto").value;
+        const email = document.getElementById("email").value;
+        const senha = document.getElementById("senha").value;
+        const confirmSenha = document.getElementById("confirmSenha").value;
+
+        if (senha !== confirmSenha) {
+          alert("As senhas não coincidem");
+          return;
+        }
+
+        fetch("php/register.php", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+          body: `nomeCompleto=${nomeCompleto}&email=${email}&senha=${senha}`,
+        })
+          .then((response) => response.text())
+          .then((data) => {
+            alert(data);
+            if (data.includes("successfully")) {
+              window.location.href = "index.html";
+            }
+          });
+      }
+    </script>
+  </body>
+</html>

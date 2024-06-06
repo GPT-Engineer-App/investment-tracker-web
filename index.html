@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Projeto Financeiro - Login</title>
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <h1>Projeto Financeiro</h1>
+      </div>
+      <div class="form-group">
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" />
+      </div>
+      <div class="form-group">
+        <label for="senha">Senha:</label>
+        <input type="password" id="senha" name="senha" />
+      </div>
+      <button class="button" onclick="login()">Login</button>
+      <button class="button" onclick="window.location.href='register.html'">Cadastrar</button>
+    </div>
+
+    <script>
+      function login() {
+        const email = document.getElementById("email").value;
+        const senha = document.getElementById("senha").value;
+
+        fetch("php/login.php", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+          body: `email=${email}&senha=${senha}`,
+        })
+          .then((response) => response.text())
+          .then((data) => {
+            if (data.includes("successfully")) {
+              sessionStorage.setItem("email", email);
+              window.location.href = "main.html";
+            } else {
+              alert(data);
+            }
+          });
+      }
+    </script>
+  </body>
+</html>
